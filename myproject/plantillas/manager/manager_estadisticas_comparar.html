@@ -1,0 +1,80 @@
+{% extends 'manager_home.html' %}
+
+{% load static %}
+
+{% block principal %}
+
+<div class="card">
+        <div class="card-header text-center">
+            <h3 style='color:#7133E2'>Tu agencia en HV!</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Tus ganancias totales son: {{ dinero_total }}</b>
+                    <ul>
+                        <li><b> Ranking#{{ranking_ganacias}} dentro de <span style='color:#7133E2'>HV<span></b> 
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_dinero_agencias}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Has completado: {{reservaciones_total}} reservaciones</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_reservaciones_total}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_reservaciones_total}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Has completado: {{reservaciones_paquetes_total}} reservaciones de paquetes</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_reservaciones_paquetes}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_reservaciones_paquetes}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Has completado: {{reservaciones_individuales_total}} reservaciones individuales</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_reservaciones_individuales}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_reservaciones_individuales}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Han reservado: {{diferentes_turistas_reservaciones}} diferentes turistas</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_cantidad_turistas}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_cantidad_turistas}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Ofertas: {{Cantidad_paquetes}} paquetes actualmente</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_cantidad_paquetes}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_cantidad_paquetes}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Ofertas un precio promedio: {{agencia_promedio_precio_paquetes}} por  paquete actualmente</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_precio_promedio_paquetes}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_precio_paquetes}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Tienes asociación con: {{Cantidad_hoteles}} hoteles actualmente</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_cantidad_hoteles}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_cantidad_hoteles}}
+                    </ul>
+                </li>
+                <li class="list-group-item"><b>Tienes asociación con: {{Cantidad_excursiones}} excursiones actualmente</b> 
+                    <ul>
+                        <li><b> Ranking#{{ranking_cantidad_excursiones}} dentro de</b> <span style='color:#7133E2'>HV<span>
+                        <li><b> Promedio en <span style='color:#7133E2'>HV<span>:{{Promedio_cantidad_excursiones}}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer">
+        <div calss="text">Quieres mejorar el rendimiento? Estos datos te pueden ayudar:</div>
+            <ul class="list-group">
+                <li class="list-group-item"><b>Hotel más reservado en <span style='color:#7133E2'>HV<span>: {{ hotel_mas_reservado }}</b>
+                <li class="list-group-item"><b>Excursión más reservada en <span style='color:#7133E2'>HV<span>: {{ excursion_mas_reservada }}</b>
+            </ul>
+        </div>
+</div>
+
+
+
+{% endblock principal %}

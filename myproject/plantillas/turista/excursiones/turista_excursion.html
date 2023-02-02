@@ -1,0 +1,143 @@
+{% extends 'turista_home.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block principal %}
+
+<div class="text-center">
+    <h1 style='color:#7133E2'>Excursiones</h1>
+</div>
+
+<div class="container">
+<div id="table_container" class="table">
+    <table id="tabla_principal" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Lugar/S</th>
+                    <th>Día/S</th>
+                    <th>Lugar/LL</th>
+                    <th>Día/LL</th>
+                    <th>Hoteles</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exc in excursiones %}
+                <tr>
+                    <td> {{ exc.lugarSalida}}</td>
+                    <td> {{ exc.get_diaSalida_display }}</td>
+                    <td> {{ exc.lugarLlegada }}</td>
+                    <td> {{ exc.get_diaLlegada_display }}</td>
+                    <td> <a class="text-left" href="#" title="Hoteles" data-trigger="focus" data-toggle="popover" onclick='mostrar();' data-placement="top" data-content="
+                    <ul>
+                        {% for hotel in exc.hoteles.all %}
+                        <li>{{ hotel.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ exc.cant_hoteles }}</a></td>
+                    <td> {{ exc.precio }}</td>
+                    <td> 
+                        <a href="{% url 'excursion-reserva' exc.IdE %}" class="btn btn-primary">Reservar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Lugar/S</th>
+                    <th class="footer" scope="col">Día/S</th>
+                    <th class="footer" scope="col">Lugar/LL</th>
+                    <th class="footer" scope="col">Día/LL</th>
+                    <th class="footer" scope="col">Hoteles</th>
+                    <th class="footer" scope="col">Precio</th>
+                    <th class="footer" scope="col"></th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+    <button class="btn btn-link my-3" style='color:#7133E2' onclick="mostrar_panel_busqueda();">Búsqueda avanzada</button>
+</div>
+
+<div id="bloque_query" buscar-datos="{% url  'ajax-filtrar-excursiones' %}" class="row justify-content-center" style="display:None">
+    <div class="col-lg-12 col-md-6 col-sm-8">
+        <div class="card">
+            <div class="card-body" >
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ queryExcursiones.minimo_p|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ queryExcursiones.maximo_p|as_crispy_field }}
+                        </div>
+                    </div>
+                    {{ queryExcursiones.incluir_hoteles|as_crispy_field }}
+                    <div>
+                        <button class="btn btn-outline-secondary my-3" id="btn_filtrar">Filtrar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock principal %}
+
+{% block dinamic %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/my_datatable_conf.js' %}"></script>
+    <script>
+        function show_popover(){
+            $('[data-toggle="popover"]').popover({html: true});
+        }
+
+        $(document).ready(function(){
+            show_popover()
+    });
+    </script>
+    <script>
+        function mostrar_panel_busqueda(){
+            $("#bloque_query").show();
+        }
+    </script>
+    <script>
+        const btnFiltrar = document.querySelector("#btn_filtrar");
+        btnFiltrar.addEventListener("click", function (event) {
+                event.preventDefault(); 
+                var url = $("#bloque_query").attr("buscar-datos");
+                inc_hot =  $("#id_incluir_hot").prop('checked');
+                minimo_p = parseInt($("#id_minimo_p").val());
+                maximo_p = parseInt($("#id_maximo_p").val());
+                if(Number.isNaN(minimo_p)){
+                    minimo_p = -1;
+                }
+                if(Number.isNaN(maximo_p)){
+                    maximo_p = -1;
+                }
+                $.ajax({
+                    url: url, 
+                    data:{
+                        'incluir_hot': inc_hot,
+                        'minimo_p':minimo_p,
+                        'maximo_p':maximo_p
+                    },
+                    success: function (data) {
+                        $("#table_container").html(data);
+                        initialice_tp();
+                        show_popover();
+                    }
+                });
+        });
+    </script>
+
+
+{% endblock %} 

@@ -1,0 +1,47 @@
+
+
+<table id="tabla_principal" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Lugar/S</th>
+                    <th>Día/S</th>
+                    <th>Lugar/LL</th>
+                    <th>Día/LL</th>
+                    <th>Hoteles</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exc in excursiones %}
+                <tr>
+                    <td> {{ exc.lugarSalida}}</td>
+                    <td> {{ exc.get_diaSalida_display }}</td>
+                    <td> {{ exc.lugarLlegada }}</td>
+                    <td> {{ exc.get_diaLlegada_display }}</td>
+                    <td> <a class="text-left" href="#" title="Hoteles" data-trigger="focus" data-toggle="popover" onclick='mostrar();' data-placement="top" data-content="
+                    <ul>
+                        {% for hotel in exc.hoteles.all %}
+                        <li>{{ hotel.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ exc.cant_hoteles }}</a></td>
+                    <td> {{ exc.precio }}</td>
+                    <td> 
+                        <a href="{% url 'excursion-reserva' exc.IdE %}" class="btn btn-primary">Reservar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Lugar/S</th>
+                    <th class="footer" scope="col">Día/S</th>
+                    <th class="footer" scope="col">Lugar/LL</th>
+                    <th class="footer" scope="col">Día/LL</th>
+                    <th class="footer" scope="col">Hoteles</th>
+                    <th class="footer" scope="col">Precio</th>
+                    <th class="footer" scope="col"></th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>

@@ -1,0 +1,164 @@
+{% extends 'turista_home.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block principal %}
+
+<div class="text-center">
+    <h1 style='color:#7133E2'>Paquetes</h1>
+</div>
+
+<div class="container">
+<div id="table_container" class="table">
+    <table id="tabla_principal" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Descripción</th>
+                    <th>Agencia</th>
+                    <th>Precio</th>
+                    <th>Duración</th>
+                    <th>Hoteles</th>
+                    <th>Facilidades</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paquete in paquetes %}
+                <tr>
+                    <td> {{ paquete.descripcion }}</td>
+                    <td> {{ paquete.agencia }}</td>
+                    <td> {{ paquete.precio }}</td>
+                    <td> {{ paquete.duracion }} días</td>
+                    <td> <a class="text-left" href="#" title="Hoteles" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="
+                    <ul>
+                        {% for hotel in paquete.hoteles.all %}
+                        <li>{{ hotel.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ paquete.cant_hoteles }}</a></td>
+                    <td> <a class="text-left" href="#" title="Facilidades" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="
+                    <ul>
+                        {% for facilidad in paquete.facilidades.all %}
+                        <li>{{ facilidad.descripcion }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ paquete.cant_facilidades }}</a></td>
+                    <td> 
+                        <a href="{% url 'paquete-reserva' paquete.CodigoP %}" class="btn btn-primary">Reservar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Descripción</th>
+                    <th class="footer" scope="col">Agencia</th>
+                    <th class="footer" scope="col">Precio</th>
+                    <th class="footer" scope="col">Duración</th>
+                    <th class="footer" scope="col">Hoteles</th>
+                    <th class="footer" scope="col">Facilidades</th>
+                    <th class="footer" scope="col"></th>
+                </tr>
+            </tfoot>
+    </table>
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+    <button class="btn btn-link my-3" style='color:#7133E2' onclick="mostrar_panel_busqueda();">Búsqueda avanzada</button>
+</div>
+
+<div id="bloque_query" buscar-datos="{% url  'ajax-filtrar-paquetes' %}" class="row justify-content-center" style="display:None">
+    <div class="col-lg-12 col-md-6 col-sm-8">
+        <div class="card">
+            <div class="card-body" >
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ queryPaquetes.minimo_p|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ queryPaquetes.maximo_p|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ queryPaquetes.minimo_dur|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ queryPaquetes.maximo_dur|as_crispy_field }}
+                        </div>
+                    </div>
+                    {{ queryPaquetes.incluir_facilidades|as_crispy_field }}
+                    <div>
+                        <button class="btn btn-outline-secondary my-3" id="btn_filtrar">Filtrar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock principal %}
+
+{% block dinamic %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/my_datatable_conf.js' %}"></script>
+    <script>
+        function mostrar_panel_busqueda(){
+            $("#bloque_query").show();
+        }
+    </script>
+    <script>
+        function show_popover(){
+            $('[data-toggle="popover"]').popover({html: true});
+        }
+
+        $(document).ready(function(){
+            show_popover()
+    });
+    </script>
+    <script>
+        const btnFiltrar = document.querySelector("#btn_filtrar");
+        btnFiltrar.addEventListener("click", function (event) {
+                event.preventDefault(); 
+                var url = $("#bloque_query").attr("buscar-datos");
+                inc_fac =  $("#id_incluir_fac").prop('checked');
+                minimo_p = parseInt($("#id_minimo_p").val());
+                maximo_p = parseInt($("#id_maximo_p").val());
+                minimo_dur = parseInt($("#id_minimo_dur").val());
+                maximo_dur = parseInt($("#id_maximo_dur").val());
+                if(Number.isNaN(minimo_p)){
+                    minimo_p = -1;
+                }
+                if(Number.isNaN(maximo_p)){
+                    maximo_p = -1;
+                }
+                if(Number.isNaN(minimo_dur)){
+                    minimo_dur = -1;
+                }
+                if(Number.isNaN(maximo_dur)){
+                    maximo_dur = -1;
+                }
+                $.ajax({
+                    url: url, 
+                    data:{
+                        'inc_fac': inc_fac,
+                        'minimo_p':minimo_p,
+                        'maximo_p':maximo_p,
+                        'minimo_dur':minimo_dur,
+                        'maximo_dur':maximo_dur
+                    },
+                    success: function (data) {
+                        $("#table_container").html(data);
+                        initialice_tp();
+                        show_popover(); 
+                    }
+                });
+        });
+    </script>
+
+{% endblock %}
+
+

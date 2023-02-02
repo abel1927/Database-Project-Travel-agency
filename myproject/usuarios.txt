@@ -1,0 +1,31 @@
+Carlos12 Carlos carlos@example.com Afgan... Azda!12avcx      
+
+Pedro1 Pedro pedro@example.com Arge... Azda!12avxc
+
+Juan2 Juan juan2@.... Austria Azda!13avxc
+
+Sandra Sandra sandra@example.com gorda1927
+
+Guille 2e3r4t5y6
+
+
+administrador: admin:adminpassword
+
+
+manager:
+- Gatusso Genaro gatusso@example.com Izda!!reBgred77K2a
+
+- ganDomMan Gino giniFe@example.com casa!!perro!!#12
+
+- Belloti007 Julio belloti007@example.com pull-over98
+
+- ganzhu84    elpassworddeganzhu
+
+- lolito baile7654 
+
+adminAgencias
+
+Ximi ximiadminpwd
+
+lolito baile7654  
+

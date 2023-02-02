@@ -1,0 +1,182 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/bootstrap-extended.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/presentacion.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="card-deck mt-5">
+        <div class="card text-center border-info bg-light">
+            <div class="card-body">
+                <h4 class="card-title">Cliente</h4>
+                <p class="card-text">
+                    Si desea hacer reservaciones para sus próximas vacaciones, 
+                    si desea conocer los mejores destinos a los mejores precios...! 
+                    Este es su sitio.
+                </p>
+                <div class="btn-group-toggle">
+                    <a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a>
+                    <a href="{% url 'turista-signup' %}"class="btn btn-dark">Registrarse</a>
+                </div>             
+            </div>
+        </div>
+
+        <div class="card text-center border-info bg-white">
+            <div class="card-body">
+                <h4 class="card-title">Empresa</h4>
+                <p class="card-text">
+                    Si ya está registrado maneje las ofertas de su agencia a golpe  
+                    de click. Si posee una agencia puede solicitar su registro y comenzar
+                    a trabajar con nosotros.!
+                </p>
+                <div class="btn-group-toggle">
+                    <a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a>
+                    <a href="{% url 'agencia-solicitud' %}" class="btn btn-dark">Solicitud</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+    <p> </p>
+    </div>
+    <div class="row">
+    <p> </p>
+    </div>
+
+
+<div class="grey-bg container-fluid">
+    <section id="minimal-statistics">
+    <div class="row">
+        <div class="col-12 mt-3 mb-1">
+            <h4 class="text-uppercase">Nuestras Estadísticas</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-2 col-sm-0 col-0"></div>
+        <div class="col-xl-4 col-sm-6 col-12"> 
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-user success font-large-2 float-right"></i>
+                            </div>
+                            <div class="media-body text-right">
+                                <h2>{{ turistas }}</h2>
+                                <h4><b>Clientes</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="media-body text-left">
+                                <h2 class="danger">{{agencias}}</h2>
+                                <h4><b>Agencias</b></h4>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="icon-rocket danger font-large-2 float-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-sm-0 col-0"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-4 col-sm-6 col-12"> 
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-cup success font-large-2 float-right"></i>
+                            </div>
+                            <div class="media-body text-right">
+                                <h2 class="success">{{hoteles}}</h2>
+                                <h4><b>Hoteles</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12"> 
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-support primary font-large-2 float-right"></i>
+                            </div>
+                            <div class="media-body text-right">
+                                <h2 class="success">{{paquetes}}</h2>
+                                <h4><b>Paquetes</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="media-body text-left">
+                                <h2 class="danger">{{excursiones}}</h2>
+                                <h4><b>Excursiones</b></h4>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="icon-direction danger font-large-2 float-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-4 col-sm-0 col-0"></div>
+        <div class="col-xl-4 col-sm-6 col-12"> 
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-pencil primary font-large-2 float-left" style='color:#7133E2'></i>
+                            </div>
+                            <div class="media-body text-right">
+                                <h2>{{reservaciones}}</h2>
+                                <h4><b>Reservaciones</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-0 col-0"></div>
+    </div>
+
+</section>
+
+
+
+
+{% endblock %}

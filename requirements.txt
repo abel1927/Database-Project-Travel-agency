@@ -1,0 +1,4 @@
+Django==3.2
+django-countries==7.1
+django-crispy-forms==1.11.2
+django-widget-tweaks==1.4.8

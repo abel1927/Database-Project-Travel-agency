@@ -1,0 +1,33 @@
+{% extends 'manager_home.html' %}
+
+{% load crispy_forms_tags%} 
+
+{% load static %}
+
+{% block principal %}
+
+<div class="row justify-content-center">
+        <div class="col-lg-10 col-md-6 col-sm-8">
+            <div class="card">
+                <div class="card-header text-center">
+                        <h3 class="card-title text-center" style='color:#7133E2'>Nuevo Paquete</h3>
+                    </div>
+                <div class="card-body">
+                    <form method="post" validate>
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <!--{% include 'includes/form.html' %}-->
+                        <tr>
+                            <th><button type="submit" class="btn btn-primary btn-block">Agregar</button></th>
+                        </tr>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock principal %}
+
+{% block dinamic %}
+{% endblock %}

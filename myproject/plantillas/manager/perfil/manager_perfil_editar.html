@@ -1,0 +1,23 @@
+{% extends 'manager_home.html' %}
+
+{% load static %}
+
+{% block principal %}
+
+<div class="row justify-content-center">
+        <div class="col-lg-10 col-md-6 col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Editar Perfil</h3>
+                    <form method="post" validate>
+                        {% csrf_token %}
+                        {% include 'includes/form.html' %}                       
+                        <tr>
+                            <th><button type="submit" class="btn btn-primary btn-block">Guardar</button></th>
+                        </tr>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock principal %}

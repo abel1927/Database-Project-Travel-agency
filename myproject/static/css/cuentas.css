@@ -1,0 +1,12 @@
+body {
+    background-color:white;
+    }
+
+.logo a {
+    color: rgba(113, 51, 226, 0.9);
+    }
+
+.logo a:hover,
+.logo a:active {
+    text-decoration: none;
+    }

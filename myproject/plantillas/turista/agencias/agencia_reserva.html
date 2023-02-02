@@ -1,0 +1,186 @@
+{% extends 'turista_home.html' %}
+
+{% load crispy_forms_tags %} 
+
+{% load static %}
+
+{% block title %}Reserva por agencia{% endblock %}
+
+
+{% block principal %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-6 col-sm-8">
+            <div class="card mt-4">
+                <div class="card-header">
+                <h3 class="card-title text-center" style='color:#7133E2'>Reserva</h3>
+                </div>
+                <div class="card-body" >
+                    <form id="id_reserva_form" method="post" action='.' enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {{agencia_form|crispy}}
+
+                        <div class="card" id='card_hoteles' data-ofertas="{% url 'ajax-ofertas-hotel' %}">
+                            <div class="card-header">
+                            <h3 class="card-title text-center" style='color:#7133E2'>Hoteles</h3>
+                            </div>
+                            <div id="form_container" class="card-body">
+
+                                {% for hotel_form in hoteles_formset %}
+                                
+                                    <div class="card border-dark" id="hotel-form-card-0">
+                                        {{ hotel_form|crispy }} 
+                                    </div>
+                                
+                                {% endfor %}
+                            
+                            </div>
+
+                            {{ hoteles_formset.management_form }}
+                            
+                            <button id="id_agregar_hotel"  class="btn btn-primary my-3 col-2">Agregar otro hotel</button>
+
+                        </div>
+                        
+                        <div>
+                            <button id="id_btn_submit" type="submit" value="Submit" disabled="true" class="btn btn-success my-3" >Reservar</button>
+                            <span id="info_btn_submit" class="text-info small" >Debe seleccionar al menos un hotel o excursión.</span> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock principal %}
+
+{% block dinamic %}           
+
+
+<script>
+    function cambio(obj){
+        var url = $("#card_hoteles").attr("data-ofertas");  
+        var hotel_id = $(obj).val(); 
+        var id_form = $(obj).attr('id')
+        if(hotel_id === ""){
+            hotel_id = -1;
+        }
+        else{
+            $("select.hotel_class").each(function () {
+                if(($(this).attr('id') === id_form || $(this).val()==="")){
+                }
+                else{
+                    hotel_seleccionado = $(this).val();
+                    if(hotel_seleccionado === hotel_id){
+                        hotel_id = -1
+                        alert("Ese hotel ya fue seleccionado!!")
+                    }  
+                }
+            });
+        }
+        if(hotel_id === -1){
+            $(obj).val("")
+        }
+        var myreg = new RegExp(/\d+/)
+        var rep = id_form.match(myreg)[0]
+        var id_base_oferta = "#id_form-11-ofertas"
+        var id_oferta_actual = id_base_oferta.replace(myreg, rep)
+        $.ajax({
+            url: url,
+            data: {
+            'hotel': hotel_id
+            },
+            success: function (data) {
+            $(id_oferta_actual).show();
+            $(id_oferta_actual).html(data); 
+            }
+        });
+    }   
+</script>
+
+<script >
+    $( document ).ready(function() {
+        $("select.hotel_class").each(function () {      
+            $(this).val("")
+        });;
+    });
+</script>
+
+<script>
+    var opciones_exc_array = new Array();
+    var opciones_ofer_array = new Array();
+
+    function on_off_btn_submit(){
+        if(opciones_exc_array.length > 0 || opciones_ofer_array.length>0){
+            $("#id_btn_submit").prop("disabled", false);
+            $("#info_btn_submit").hide();
+        }
+        else{
+            $("#id_btn_submit").prop("disabled", true);
+            $("#info_btn_submit").show();
+        }
+    }
+
+    var removeItemFromArr = ( arr, item ) => {
+        var i = arr.indexOf( item );
+        i !== -1 && arr.splice( i, 1 );
+    };
+
+    var addItemToArr = ( arr, item ) => {
+        var i = arr.indexOf( item );
+        i === -1 && arr.push(item);
+    };
+
+    function exc_opcionChange(obj){
+        var opciones = $(obj).val();
+        opciones_exc_array = opciones;
+        on_off_btn_submit()
+    }
+
+    function oferta_opcionChange(obj){
+        var options = $(obj.options);
+        var no_seleccionadas = $.map(options , function(option) { return option.value; });
+        var seleccionadas = $(obj).val();
+        for(var i = 0; i < seleccionadas.length; i++){
+            removeItemFromArr(no_seleccionadas, seleccionadas[i])
+        }
+        for(var i = 0; i < no_seleccionadas.length; i++){
+            removeItemFromArr(opciones_ofer_array, no_seleccionadas[i])
+        }
+        for(var i = 0; i < seleccionadas.length; i++){
+            addItemToArr(opciones_ofer_array, seleccionadas[i])
+        }
+        on_off_btn_submit()
+    }
+
+</script>
+
+<script>
+    const agregarHotelFormBtn = document.querySelector("#id_agregar_hotel");
+    agregarHotelFormBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+
+        var cantidad = document.querySelector("#id_form-TOTAL_FORMS");
+
+        var nuevoNodo = document.querySelector("#hotel-form-card-0").cloneNode(true);
+
+        nuevoNodo.id = 'hotel-form-card-' + cantidad.value;
+        var ht = nuevoNodo.innerHTML;
+
+        var myreg = /form-0-/g;
+        nuevoNodo.innerHTML = nuevoNodo.innerHTML.replace(myreg,'form-'+cantidad.value+'-')
+
+        document.querySelector("#form_container").appendChild(nuevoNodo);
+
+        $("#id_form-"+cantidad.value+"-ofertas").hide();
+
+        cantidad.value = parseInt(cantidad.value) + 1;
+
+    });
+
+</script>
+
+
+{% endblock dinamic %}

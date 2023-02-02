@@ -1,0 +1,149 @@
+{% extends 'manager_home.html' %}
+
+{% load static %}
+
+{% block principal %}
+<div>
+    <h1 style='color:#7133E2'>Turistas que han Reservado con la Agencia</h1>
+</div>
+<div class="table">
+    <table id="tabla_turistas" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Nacionalidad</th>
+                    <th>Email</th>
+                    <th>Reservaciones de Paquetes</th> 
+                    <th>Reservaciones Individuales</th> 
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for turista in turistas %}
+                <tr>
+                    <td> {{ turista.user.first_name }}</td>
+                    <td> {{ turista.user.last_name }}</td>
+                    <td> {{ turista.get_pais_display }}</td>
+                    <td> {{ turista.user.email }}</td>
+                    <td> {{ turista.paq }}</td>
+                    <td> {{ turista.ind }}</td>
+                    <td> {{ turista.total }}</td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Nombre</th>
+                    <th class="footer" scope="col">Apellido</th>
+                    <th class="footer" scope="col">Nacionalidad</th>
+                    <th class="footer" scope="col">Email</th>
+                    <th class="footer" scope="col">Reservaciones de Paquetes</th>
+                    <th class="footer" scope="col">Reservaciones Individuales</th>
+                    <th class="footer" scope="col">Total</th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h1 style='color:#7133E2'>Reservaciones de Paquetes</h1>
+</div>
+<div class="table">
+    <table id="tabla_paquetes" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Turista</th>
+                    <th>Paquete</th>
+                    <th>Aereolinea</th>
+                    <th>Participantes</th>
+                    <th>Fecha</th> 
+                    <th>Precio</th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservacion in reservaciones_paquete %}
+                <tr>
+                    <td> {{ reservacion.turista.nombre }}</td>
+                    <td> {{ reservacion.paquete.descripcion }}</td>
+                    <td> {{ reservacion.get_companiaAerea_display }}</td>
+                    <td> {{ reservacion.cantidadParticipantes }}</td>
+                    <td> {{ reservacion.fecha }}</td>
+                    <td> {{ reservacion.precioTotal }}</td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Turista</th>
+                    <th class="footer" scope="col">Paquete</th>
+                    <th class="footer" scope="col">Aereolinea</th>
+                    <th class="footer" scope="col">Participantes</th>
+                    <th class="footer" scope="col">Fecha</th>
+                    <th class="footer" scope="col">Precio</th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h1 style='color:#7133E2'>Reservaciones Individuales</h1>
+</div>
+<div class="table">
+    <table id="tabla_individuales" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Turista</th>
+                    <th>Hoteles</th>
+                    <th>Excursiones</th> 
+                    <th>Aereolinea</th>
+                    <th>Participantes</th>
+                    <th>Precio</th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservacion in reservaciones_individual %}
+                <tr>
+                    <td> {{ reservacion.turista.nombre }}</td>
+                    <td> <a class="text-left" href="#" title="Hoteles" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="
+                    <ul>
+                        {% for hotel in reservacion.reservacion_hoteles.all %}
+                        <li>{{ hotel.hotel.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ reservacion.cant_hoteles }}</a></td>
+                    <td> <a class="text-left" href="#" title="Excursiones" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="
+                    <ul>
+                        {% for excursion in reservacion.excursiones.all %}
+                        <li>{{ excursion }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ reservacion.cant_excursiones }}</a></td>
+                    <td> {{ reservacion.get_companiaAerea_display }}</td>
+                    <td> {{ reservacion.cantidadAcompanhantes }}</td>
+                    <td> {{ reservacion.precioTotal }}</td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Turista</th>
+                    <th class="footer" scope="col">Hoteles</th>
+                    <th class="footer" scope="col">Excursiones</th>
+                    <th class="footer" scope="col">Aereolinea</th>
+                    <th class="footer" scope="col">Participantes</th>
+                    <th class="footer" scope="col">Precio</th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
+{% endblock principal %}
+
+{% block dinamic %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/manager_reservaciones.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({html: true});
+        });
+    </script>
+{% endblock %}

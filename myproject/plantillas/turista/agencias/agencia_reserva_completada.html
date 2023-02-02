@@ -1,0 +1,75 @@
+{% extends 'turista_home.html' %}
+
+{% load static %}
+
+{% block title %}Reserva de agencia Completada{% endblock %}
+
+
+{% block principal %}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6 col-sm-8">
+            <div class="card">
+                <div id="reserva_doc">
+                    <div class="card-body">
+                        <div class="row">
+                            <h3><b style='color:#7133E2'>Agencia: {{ reserva.agencia}} </b></h3>
+                        </div>
+                        <div class="row">
+                            <b>Cliente: {{ reserva.turista.nombre }} </b>
+                        </div>
+                        <div class="row">
+                            <b>Cantidad de acompañantes : {{ reserva.cantidadAcompanhantes}}</b>
+                        </div>
+                        <div class="row">
+                            <b>Cantidad de hoteles : {{ reserva.hoteles.count}}</b>
+                        </div>
+                        <div class="row">
+                            <b>Cantidad de excursiones : {{ reserva.excursiones.count}}</b>
+                        </div>
+                        <div class="row">
+                            <b>Precio : {{ reserva.precioTotal}}</b>
+                        </div>
+                        <div class="row">
+                            <b>Id reserva: ###reserHV!#{{ reserva.IdRI}}###</b>
+                        </div>
+                        <div class='row justify-content-sm-end text-muted'>
+                            por <b style='color:#7133E2'> HV-HayViajes!</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    La reservación individual fue completada!!</br>
+                    Muchas gracias por elegirnos!!</br>
+                    <a href="{% url 'turista-estadisticas' %}" class="btn btn-link my-3">Ir a estadísticas>></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock principal %}
+
+{% block dinamic %}
+
+    <script src="{% static 'js/jspdf.min.js' %}"> </script>
+    <script src="{% static 'js/html2canvas.min.js' %}"> </script>
+    
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            html2canvas(document.getElementById('reserva_doc'),{
+                onrendered : function(canvas){
+                    var img = canvas.toDataURL("image/png");
+                    var doc = new jsPDF({
+                        orientation: "l",
+                        unit: "mm",
+                        format: 'a6'
+                        });
+                    doc.addImage(img,'JPEG',8,8);
+                    doc.save('reserva_individual.pdf');
+                    }
+                });
+        });
+    </script>
+
+{% endblock dinamic %}

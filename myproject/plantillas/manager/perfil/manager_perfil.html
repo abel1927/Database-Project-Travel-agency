@@ -1,0 +1,42 @@
+{% extends 'manager_home.html' %}
+
+{% load static %}
+
+{% block principal%}
+<div class="header">
+    <h1 style='color:#7133E2' >Perfil</h1>
+</div>
+<div class="container">
+    <div class="card mt-4">
+        <div class="card-body">
+        <div class="">
+        <h2 style='color:#7133E2' class="float-left">Usuario</h2>
+        <a href="{% url 'manager-perfil-editar' %}" class="btn"><img src="/static/admin/img/icon-changelink.svg" alt="Modificar"></a>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item"><b>Nombre Usuario: </b>{{request.user.username}}</br></li>
+            <li class="list-group-item"><b>Nombre: </b>{{request.user.first_name}}<br></li>
+            <li class="list-group-item"><b>Apellidos: </b>{{request.user.last_name}}<br></li>
+            <li class="list-group-item"><b>Email: </b>{{request.user.email}}<br></li>
+        </ul>
+        <div class="">
+        <h2 style='color:#7133E2' class="float-left">Agencia</h2>
+        <a href="{% url 'manager-agencia-editar' %}" class="btn"><img src="/static/admin/img/icon-changelink.svg" alt="Modificar"></a>
+        </div>
+        <ul class="list-group">
+
+            <li class="list-group-item"><b>Nombre: </b>{{request.user.manageragencia.agencia.nombre}}<br></li>
+            <li class="list-group-item"><b>Email: </b>{{request.user.manageragencia.agencia.email}}<br></li>
+            <li class="list-group-item"><b>direccion: </b>{{request.user.manageragencia.agencia.direccion}}<br></li>
+            <li class="list-group-item"><b>#Fax: </b>{{request.user.manageragencia.agencia.noFax}}<br></li>
+        </ul>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+{% block dinamic %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/turista_home.js' %}"></script>
+{% endblock %}

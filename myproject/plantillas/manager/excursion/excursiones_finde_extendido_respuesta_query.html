@@ -1,0 +1,48 @@
+
+
+<table id="tabla_principal" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Lugar Salida</th>
+                    <th>Día Salida</th>
+                    <th>Lugar Llegada</th>
+                    <th>Día Llegada</th>
+                    <th>Hoteles</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for excursion in excursiones %}
+                <tr>
+                    <td> {{ excursion.lugarSalida }}</td>
+                    <td> {{ excursion.get_diaSalida_display }}</td>
+                    <td> {{ excursion.lugarLlegada }}</td>
+                    <td> {{ excursion.get_diaLlegada_display }}</td>
+                    <td> <a class="text-left" href="#" title="Hoteles" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="
+                    <ul>
+                        {% for hotel in excursion.hoteles.all %}
+                        <li>{{ hotel.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ excursion.cant_hoteles }}</a></td>
+                    <td> {{ excursion.precio }}</td>
+                    <td> 
+                        <a href="{% url 'manager-excursion-eliminar' excursion.IdE %}" class="btn btn-primary">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Lugar Salida</th>
+                    <th class="footer" scope="col">Día Salida</th>
+                    <th class="footer" scope="col">Lugar Llegada</th>
+                    <th class="footer" scope="col">Día Llegada</th>
+                    <th class="footer" scope="col">Hoteles</th>
+                    <th class="footer" scope="col">Precio</th>
+                    <!--<th class="footer" scope="col">Fin de semana</th>-->
+                    <th></th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>

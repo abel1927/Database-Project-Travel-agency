@@ -1,0 +1,26 @@
+{% extends 'turista_home.html' %}
+
+{% load static %}
+{% block principal%}
+
+<div class="header">
+    <h1 style='color:#7133E2' class="float-left">Perfil</h1>
+    <a href="{% url 'turista-perfil-editar' %}" class="btn"><img src="/static/admin/img/icon-changelink.svg" alt="Modificar"></a>
+</div>
+<div class="container">
+    <div class="card mt-4">
+        <div class="card-body">
+        <ul class="list-group">
+            <li class="list-group-item"><b>Nombre de Usuario: </b>{{request.user.username}}<br></li>
+            <li class="list-group-item"><b>Nombre: </b>{{request.user.turista.nombre}}<br></li>
+            <li class="list-group-item"><b>Apellidos: </b>{{request.user.last_name}}<br></li>
+            <li class="list-group-item"><b>Email: </b>{{request.user.email}}<br></li>
+            <li class="list-group-item"><b>Nacionalidad: </b>{{request.user.turista.get_pais_display}}<br></li>
+            <li class="list-group-item"><b>Tipo de Turista: </b>{{request.user.turista.get_tipo_display}}<br></li>
+        </ul>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+

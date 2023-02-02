@@ -1,0 +1,38 @@
+{% extends 'turista_home.html' %}
+
+{% load crispy_forms_tags%} 
+
+{% load static %}
+
+{% block title %}Reserva de paquete{% endblock %}
+
+{% block principal %}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-6 col-sm-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3 class="card-title text-center" style='color:#7133E2'>Reserva del Paquete</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="form-group">
+                            <label for="PrecioFinal" >Precio Final:</label>
+                            <input type="text"
+                            class="form-text-black-50" name="precioF" id="id_PF" readonly>
+                        </div>
+                        <button type="submit" class="btn btn-success my-3">Reservar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock principal %}
+
+{% block dinamic %}
+<script src="{% static 'js/paquete_reserva.js' %}"></script>
+{% endblock dinamic %}

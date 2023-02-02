@@ -1,0 +1,26 @@
+{% extends 'base_cuentas.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Solicitud de agencia{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Solicitud de asociación</h3>
+                    <form method="post"  action='.' enctype="multipart/form-data"  validate>
+                        {% csrf_token %}
+                        <!--{% include 'includes/form.html' %}-->
+                        {{ form|crispy}}
+                        <button type="submit" class="btn btn-primary btn-block">Validar Solicitud</button>
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Es manager de una agencia registrada? <a href="{% url 'login' %}">Iniciar sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

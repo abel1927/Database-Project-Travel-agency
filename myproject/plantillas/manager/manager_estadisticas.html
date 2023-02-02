@@ -1,0 +1,31 @@
+{% extends 'manager_home.html' %}
+
+{% load static %}
+
+{% block principal %}
+
+
+<div class="card">
+        <div class="card-header text-center">
+            <h3 style='color:#7133E2'>Resumen</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Dinero Total: </b>{{ dinero_total }} </li>
+                <li class="list-group-item"><b>Total de Paquetes: </b>{{ paquete_total }} </li>
+                <li class="list-group-item"><b>Total de Hoteles: </b>{{ hotel_total }} </li>
+                <li class="list-group-item"><b>Total Excursiones: </b>{{ excursion_total }} </li>
+                <li class="list-group-item"><b>Total de Reservaciones de Paquetes: </b>{{ reservaciones_paquete_total }} </li>
+                <li class="list-group-item"><b>Total de Reservaciones Individuales: </b>{{ reservaciones_individuales_total }} </li>
+                <li class="list-group-item"><b>Total de Reservaciones: </b>{{ reservaciones_total }} </li>
+            </ul>
+        </div>
+        <div class="card-footer text-secondary">*La cantidad de hoteles no incluye los que se encuentran dentro del paquete</div>
+</div>
+
+<div class="row">
+    <a href="{% url 'manager-estadisticas-comparar'%}" class="btn btn-link my-3" style='color:#7133E2'>Comparar mi agencia</button>
+</div>
+
+
+{% endblock principal %}

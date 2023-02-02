@@ -1,0 +1,112 @@
+{% extends 'turista_home.html' %}
+
+{% load static %}
+{% block principal%}
+<div class="text-center">
+    <h1 style='color:#7133E2'>Estadísticas</h1>
+</div>
+<br>
+<div class="container">
+<div>
+    <h3>Reservaciones de Paquetes</h3>
+</div>
+
+<div class="table">
+    <table id="tabla_paquetes" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Descripción</th>
+                    <th>Agencia</th>
+                    <th>Compañía Aerea</th>
+                    <th>Precio Total</th>
+                    <th>Participantes</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paquete in paquetes %}
+                <tr>
+                    <td> {{ paquete.paquete.descripcion }}</td>
+                    <td> {{ paquete.paquete.agencia }}</td>
+                    <td> {{ paquete.get_companiaAerea_display }}</td>
+                    <td> {{ paquete.precioTotal }}</td>
+                    <td> {{ paquete.cantidadParticipantes }}</td>
+                    <td> {{ paquete.fecha}}</td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Descripción</th>
+                    <th class="footer" scope="col">Agencia</th>
+                    <th class="footer" scope="col">Compañía Aerea</th>
+                    <th class="footer" scope="col">Precio Total</th>
+                    <th class="footer" scope="col">Participantes</th>
+                    <th class="footer" scope="col">Fecha</th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div>
+    <h3>Reservaciones Individuales</h3>
+</div>
+
+<div class="table">
+    <table id="tabla_individuales" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Agencia</th>
+                    <th>Cantidad Hoteles</th>
+                    <th>Cantidad Excursiones</th>
+                    <th>Participantes</th>
+                    <th>Precio Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservacion in reservaciones %}
+                <tr>
+                    <td> {{ reservacion.agencia.nombre }}</td>
+                    <td> {{ reservacion.cantidad_hoteles }}</td>
+                    <td> {{ reservacion.cantidad_excursiones }}</td>
+                    <td> {{ reservacion.cantidadAcompanhantes }}</td>
+                    <td> {{ reservacion.precioTotal }}</td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Agencia</th>
+                    <th class="footer" scope="col">Hoteles</th>
+                    <th class="footer" scope="col">Excursiones</th>
+                    <th class="footer" scope="col">Participantes</th>
+                    <th class="footer" scope="col">Precio</th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
+    <div class="card">
+        <div class="card-header">
+        <h3 class="card-title text-center" style='color:#7133E2'>Resumen</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Dinero Total: </b>{{ dinero_total }} </li>
+                <li class="list-group-item"><b>Total de Paquetes: </b>{{ paquete_total }} </li>
+                <li class="list-group-item"><b>Total de Hoteles: </b>{{ hotel_total }} </li>
+                <li class="list-group-item"><b>Total Excursiones: </b>{{ excursion_total }} </li>
+                <li class="list-group-item"><b>Agencia con más Reservaciones: </b>{{ agencia_max }} </li>
+                <li class="list-group-item"><b>Compañía Aérea preferida: </b>{{ aereolinea_max }} </li>
+            </ul>
+        </div>
+        <div class="card-footer text-secondary">*La cantidad de hoteles no incluye los que se encuertran dentro del paquete</div>
+    </div>
+</div>
+{% endblock %}
+{% block dinamic %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/turista_est.js' %}"></script>
+{% endblock %}

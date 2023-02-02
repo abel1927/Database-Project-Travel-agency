@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/turista_home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap4.min.css' %}">
+
+{% endblock %}
+
+<!-- 200px   height: 550px;-->
+
+<title>{% block title %}Manager Home{% endblock %}</title>
+
+
+{% block content %}  
+
+<div class="sidebar-container">
+    <div class="sidebar-logo">
+        Menú
+    </div>
+    <ul class="sidebar-navigation">
+        <li class="header">Perfil</li>
+        <li>
+            <a href="{% url 'manager-perfil'%}">
+                <i class="fa fa-home" aria-hidden="true"></i>Mi Perfil-Agencia
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'manager-estadisticas' %}">
+                <i class="fa fa-home" aria-hidden="true"></i> Estadísticas
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'manager-reservaciones' %}">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>Mis Reservaciones
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'logout'%}">
+                <i class="fa fa-tachometer" aria-hidden="true"></i> Cerrar sesión
+            </a>
+        </li>
+        <li class="header">Servicios</li>
+        <li>
+            <a href="{% url 'manager-paquete' %}">
+                <i class="fa fa-users" aria-hidden="true"></i> Paquetes
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'manager-excursion' %}">
+                <i class="fa fa-cog" aria-hidden="true"></i> Excursiones
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'manager-hotel' %}">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> Hoteles
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="content-container">
+    <!--<div class="container-fluid"> -->
+
+    {% block principal %}
+
+    {% endblock principal %}
+
+    <!--</div> -->
+</div>
+
+
+{% endblock %}

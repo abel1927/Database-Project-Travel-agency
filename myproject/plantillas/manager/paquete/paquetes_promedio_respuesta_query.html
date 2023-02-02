@@ -1,0 +1,56 @@
+
+
+<table id="tabla_principal" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Duración</th>
+                    <th>Hoteles</th>
+                    <th>Facilidades</th>
+                    <th>Reservaciones</th>
+                    <th>Disponible</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paquete in paquetes %}
+                <tr>
+                    <td> {{ paquete.descripcion }}</td>
+                    <td> {{ paquete.precio }}</td>
+                    <td> {{ paquete.duracion }} dias</td>
+                    <td> <a class="text-left" href="#" title="Hoteles" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="
+                    <ul>
+                        {% for hotel in paquete.hoteles.all %}
+                        <li>{{ hotel.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ paquete.cant_hoteles }}</a></td>
+                    <td> <a class="text-left" href="#" title="Facilidades" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="
+                    <ul>
+                        {% for facilidad in paquete.facilidades.all %}
+                        <li>{{ facilidad.descripcion }}</li>
+                        {% endfor %}
+                    </ul>
+                    ">{{ paquete.cant_facilidades }}</a></td>
+                    <td> {{ paquete.cant_reservaciones }}</td>
+                    <td> {{ paquete.disponible }}</td>  
+                    <td> 
+                        <a href="{% url 'manager-paquete-editar' paquete.CodigoP %}" class="btn btn-primary">Modificar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Descripción</th>
+                    <th class="footer" scope="col">Precio</th>
+                    <th class="footer" scope="col">Duración</th>
+                    <th class="footer" scope="col">Hoteles</th>
+                    <th class="footer" scope="col">Facilidades</th>
+                    <th class="footer" scope="col">Reservaciones</th>
+                    <th class="footer" scope="col">Disponible</th>
+                    <th class="footer" scope="col"></th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>

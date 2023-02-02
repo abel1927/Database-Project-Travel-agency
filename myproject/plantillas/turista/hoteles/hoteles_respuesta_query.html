@@ -1,0 +1,37 @@
+
+<table id="tabla_principal" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Oferta</th>
+                    <th>Hotel</th>
+                    <th>Categoría</th>
+                    <th>Dirección</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for oferta in ofertas %}
+                <tr>
+                    <td> {{ oferta.descripcion }}</td>
+                    <td> {{ oferta.hotel.nombre}}</td>
+                    <td> {{ oferta.hotel.categoria }}</td>
+                    <td> {{ oferta.hotel.direccion }}</td>
+                    <td> {{ oferta.precio }}</td>
+                    <td> 
+                        <a href="{% url 'hotel-reserva' oferta.IdO %}" class="btn btn-primary">Reservar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Oferta</th>
+                    <th class="footer" scope="col">Hotel</th>
+                    <th class="footer" scope="col">Categoría</th>
+                    <th class="footer" scope="col">Dirección</th>
+                    <th class="footer" scope="col">Precio</th>
+                    <th class="footer" scope="col"></th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>

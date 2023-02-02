@@ -1,0 +1,62 @@
+{% extends 'turista_home.html' %}
+
+{% load static %}
+
+{% block principal %}
+
+<div class="text-center">
+    <h1 style='color:#7133E2'>Agencias</h1>
+</div>
+
+<div class="container">
+<div class="table">
+    <table id="tabla_principal" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad de excursiones</th>
+                    <th>Precio Prom/Exc</th>
+                    <th>Cantidad de Hoteles</th>
+                    <th>Precio Prom/Hot</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agencia in agencias %}
+                <tr>
+                    <td> {{ agencia.nombre }}</td>
+                    <td> {{ agencia.cant_exc}}</td>
+                    {% if agencia.cant_exc %}
+                    <td> {{ agencia.avg_precio_exc }}</td>
+                    {%else%}
+                    <td> -- </td>
+                    {% endif %}
+                    <td> {{ agencia.cant_hot }}</td>
+                    <td> {{ agencia.avg_precio_hot }}</td>
+                    <td> 
+                        <a href="{% url 'agencia-reserva' agencia.IdA %}" class="btn btn-primary">Reservar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <th class="footer" scope="col">Nombre</th>
+                    <th class="footer" scope="col">Cantidad de excursiones</th>
+                    <th class="footer" scope="col">Precio Prom/Exc</th>
+                    <th class="footer" scope="col">Cantidad de Hoteles</th>
+                    <th class="footer" scope="col">Precio Prom/Hotel</th>
+                    <th class="footer" scope="col"></th>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
+</div>
+
+{% endblock principal %}
+
+{% block dinamic %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/my_datatable_conf.js' %}"></script>
+{% endblock %} 

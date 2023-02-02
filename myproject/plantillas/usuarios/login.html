@@ -1,0 +1,23 @@
+{% extends 'base_cuentas.html' %}
+
+{% block title %}Inicio de sesión de turista{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Inicio de sesión</h3>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% include 'includes/form.html' %}
+                        <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Nuevo en HV-HayViajes!? <a href="{% url 'turista-signup' %}">Registrarse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+
+
+{% for oferta in ofertas %}
+    <option value="{{ oferta.pk }}" precio="{{oferta.precio}}">
+    {{ oferta.descripcion }}  :   {{oferta.precio}}
+    </option>
+{% endfor %}
